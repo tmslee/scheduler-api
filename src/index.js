@@ -7,6 +7,11 @@ const server = require("http").Server(app);
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
 
+const client = new pg.Client({
+  connectionString: process.env.DATABASE_URL || '',
+  ssl: { rejectUnauthorized: false },
+});
+
 wss.on("connection", socket => {
   socket.onmessage = event => {
     console.log(`Message Received: ${event.data}`);
